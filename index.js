@@ -13,6 +13,9 @@ var employeesList =
     { id: "B10C", name: "Alan Collins", role: "Manager", salary: 40000 },
     { id: "YY12", name: "Brian Brogan", role: "Manager", salary: 43250 }]
 
+
+
+
 app.listen(3004, () => {
     console.log("Server is listening on port 3004 :)");
 });
@@ -20,19 +23,31 @@ app.listen(3004, () => {
 // Server / page 
 app.get('/homePage', (req, res) => {
     console.log("Get Request Recieved on /")
-    res.send("<h1>Welcome to the Home Page</h1>")
+    res.render('home');
 
 })
 
 // Server /employees page
 app.get('/employees', (req, res) => {
     console.log("Get Request Recieved on /employees")
-    res.render("addEmployee", { "emp": employeesList })
+    res.render("employee", { "emp": employeesList })
+})
+
+// Server /editemployees page
+app.get('/editemployees', (req, res) => {
+    console.log("Get Request Recieved on /employees")
+    res.render('editemployee')
 })
 
 
-// Server /employees page
+// Server /depts page
 app.get('/depts', (req, res) => {
-    console.log("Get Request Recieved on /depts")
+    console.log("Get Request Recieved on /depts to display depts info")
+    res.render('depts');
 })
 
+// Server /deletedept page
+app.get('/deleteDept', (req, res) => {
+    console.log("Get Request Recieved to delete depts info")
+    res.render('deletedept')
+})
