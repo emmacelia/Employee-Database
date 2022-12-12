@@ -27,4 +27,21 @@ var getEmp = function () {
     })
 
 }
+
+var getDept = function () {
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM dept')
+            .then((data) => {
+                resolve(data)
+            })
+            .catch(error => {
+                reject(error)
+            })
+
+    })
+
+}
 module.exports = { getEmp }
+module.exports = { getDept }
+
+

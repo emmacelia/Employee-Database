@@ -3,32 +3,48 @@
 
 <table border="1">
     <tr>
+        <th>EID</th>
         <th>ID</th>
         <th>Name</th>
-        <th>role</th>
         <th>Salary</th>
+        <th>Update</th>
     </tr>
-    <% data.forEach(element=> {
-        console.log(element.eid)
-        })
-        { %>
-        <tr>
+
+
+    <tr>
+
+
+    </tr>
+    <% for(let e of employee){%>
+        <tl>
+
+            </tr>
             <td>
-                <%= element.eid %>
+
+                <%=e.eid %>
+            </td>
+
+            <td>
+                <%=e.ename %>
             </td>
             <td>
-                <%= element.ename %>
+                <%=e.role %>
             </td>
             <td>
-                <%= element.role %>
+                <%=e.salary %>
             </td>
+
             <td>
-                <%= element.Salary %>
+                <a href="http://localhost:3004/update">Update</a>
             </td>
-            <td>
-            </td>
-        </tr>
-        <% }) %>
+
+            </tr>
+
+
+            <% }%>
+
+
+
 </table>
 <br /><br />
 <a href="http://localhost:3004/editemployees">Edit</a>

@@ -8,6 +8,7 @@ var mySQLDAO = require("./sqlconnect");
 var pool
 var dao = require("./mongoconnect");
 
+
 app.listen(3004, () => {
     console.log("Server is listening on port 3004 :)");
 });
@@ -21,16 +22,9 @@ app.get('/homePage', (req, res) => {
 
 
 // Server /editemployees page
-app.get('/editemployees', (req, res) => {
+app.get('/Update', (req, res) => {
     console.log("Get Request Recieved on /employees")
     res.render('editemployee')
-})
-
-
-// Server /depts page
-app.get('/depts', (req, res) => {
-    console.log("Get Request Recieved on /depts to display depts info")
-    res.render('depts');
 })
 
 // Server /deletedept page
@@ -41,8 +35,9 @@ app.get('/deleteDept', (req, res) => {
 
 app.get('/employees', (req, res) => {
     mySQLDAO.getEmp()
-        .then((data) => {
-            res.send(data)
+        .then((d) => {
+            //res.send(data)
+            res.render('employee', {employee: d})
         })
         .catch((error) => {
             if (error.errno == 1146) {
@@ -67,3 +62,20 @@ app.get('/find', (req, res) => {
         })
 })
 
+
+app.get('/dept', (req, res) => {
+    mySQLDAO.getDept()
+        .then((de) => {
+            //res.send(data)
+            res.render('depts', {depts: de})
+        })
+        .catch((error) => {
+            if (error.errno == 1146) {
+                res.send("Invalid table: " + error.sqlMessage)
+            }
+            else (
+                res.send(error)
+            )
+
+        })
+})

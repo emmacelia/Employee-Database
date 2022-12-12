@@ -1,5 +1,54 @@
 <h1> Welcome to Departments</h1>
 
-<a href="http://localhost:3004/deletedept">Delete</a>
+
+<h3> Employees Page </h3>
+
+
+<table border="1">
+    <tr>
+        <th>EID</th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Salary</th>
+        <th>Update</th>
+    </tr>
+
+
+    <tr>
+
+
+    </tr>
+    <% for(let d of depts){%>
+        <tl>
+
+            </tr>
+            <td>
+
+                <%=d.did %>
+            </td>
+
+            <td>
+                <%=d.dname %>
+            </td>
+            <td>
+                <%=d.lid %>
+            </td>
+            <td>
+                <%=d.budget %>
+            </td>
+
+            <td>
+                <a href="http://localhost:3004/deletedept">delete</a>
+
+            </td>
+
+            </tr>
+
+
+            <% }%>
+
+
+
+</table>
 <br /><br />
 <a href="http://localhost:3004/homePage">Home</a>
