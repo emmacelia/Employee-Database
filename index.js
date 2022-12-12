@@ -6,6 +6,7 @@ app.set("view engine", "ejs");
 var x = [{ name: "Johnny", age: 31 }, { name: "Smithy", age: 41 }]
 var mySQLDAO = require("./sqlconnect");
 var pool
+var dao = require("./mongoconnect");
 
 app.listen(3004, () => {
     console.log("Server is listening on port 3004 :)");
@@ -38,8 +39,6 @@ app.get('/deleteDept', (req, res) => {
     res.render('deletedept')
 })
 
-
-
 app.get('/employees', (req, res) => {
     mySQLDAO.getEmp()
         .then((data) => {
@@ -55,3 +54,16 @@ app.get('/employees', (req, res) => {
 
         })
 })
+
+app.get('/find', (req, res) => {
+    dao.findAll()
+        .then((documents) => {
+            // Process documents
+            res.send(documents)
+        })
+        .catch((error) => {
+            // Handle error
+            res.send(error)
+        })
+})
+
