@@ -3,18 +3,9 @@ var express = require('express')
 var app = express();
 let ejs = require("ejs");
 app.set("view engine", "ejs");
-
 var x = [{ name: "Johnny", age: 31 }, { name: "Smithy", age: 41 }]
 var mySQLDAO = require("./sqlconnect");
-
-var employeesList =
-    [{ id: "X103", name: "John Smith", role: "Manager", salary: 45000 },
-    { id: "XT92", name: "Mary Murphy", role: "Manager", salary: 41750 },
-    { id: "B10C", name: "Alan Collins", role: "Manager", salary: 40000 },
-    { id: "YY12", name: "Brian Brogan", role: "Manager", salary: 43250 }]
-
-
-
+var pool
 
 app.listen(3004, () => {
     console.log("Server is listening on port 3004 :)");
@@ -24,14 +15,9 @@ app.listen(3004, () => {
 app.get('/homePage', (req, res) => {
     console.log("Get Request Recieved on /")
     res.render('home');
-
 })
 
-// Server /employees page
-app.get('/employees', (req, res) => {
-    console.log("Get Request Recieved on /employees")
-    res.render("employee", { "emp": employeesList })
-})
+
 
 // Server /editemployees page
 app.get('/editemployees', (req, res) => {
@@ -50,4 +36,22 @@ app.get('/depts', (req, res) => {
 app.get('/deleteDept', (req, res) => {
     console.log("Get Request Recieved to delete depts info")
     res.render('deletedept')
+})
+
+
+
+app.get('/employees', (req, res) => {
+    mySQLDAO.getEmp()
+        .then((data) => {
+            res.send(data)
+        })
+        .catch((error) => {
+            if (error.errno == 1146) {
+                res.send("Invalid table: " + error.sqlMessage)
+            }
+            else (
+                res.send(error)
+            )
+
+        })
 })

@@ -5,19 +5,25 @@
     <tr>
         <th>ID</th>
         <th>Name</th>
+        <th>role</th>
         <th>Salary</th>
     </tr>
-    <% emp.forEach((emp)=>
+    <% data.forEach(element=> {
+        console.log(element.eid)
+        })
         { %>
         <tr>
             <td>
-                <%= emp.id %>
+                <%= element.eid %>
             </td>
             <td>
-                <%= emp.name %>
+                <%= element.ename %>
             </td>
             <td>
-                <%= emp.salary %>
+                <%= element.role %>
+            </td>
+            <td>
+                <%= element.Salary %>
             </td>
             <td>
             </td>

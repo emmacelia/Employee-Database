@@ -1,12 +1,11 @@
 var pmysql = require("promise-mysql")
 var pool
-
-pmysql.createPool({
+pool = pmysql.createPool({
     connectionLimit: 3,
     host: 'localhost',
     user: 'root',
     password: 'root',
-    database: 'proj22'
+    database: 'proj2022'
 })
     .then((p) => {
         pool = p
@@ -15,9 +14,9 @@ pmysql.createPool({
         console.log("pool error:" + e)
     })
 
-var getEmployee = function () {
+var getEmp = function () {
     return new Promise((resolve, reject) => {
-        pool.q('SELECT * FROM employee')
+        pool.query('SELECT * FROM employee')
             .then((data) => {
                 resolve(data)
             })
@@ -28,4 +27,4 @@ var getEmployee = function () {
     })
 
 }
-module.exports = { getEmployee }
+module.exports = { getEmp }
