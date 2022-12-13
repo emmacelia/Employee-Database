@@ -35,9 +35,9 @@ app.get('/deleteDept', (req, res) => {
 
 app.get('/employees', (req, res) => {
     mySQLDAO.getEmp()
-        .then((d) => {
+        .then((e) => {
             //res.send(data)
-            res.render('employee', {employee: d})
+            res.render('employee', { employee: e })
         })
         .catch((error) => {
             if (error.errno == 1146) {
@@ -67,7 +67,7 @@ app.get('/dept', (req, res) => {
     mySQLDAO.getDept()
         .then((de) => {
             //res.send(data)
-            res.render('depts', {depts: de})
+            res.render('depts', { depts: de })
         })
         .catch((error) => {
             if (error.errno == 1146) {

@@ -41,7 +41,7 @@ var getDept = function () {
     })
 
 }
-module.exports = { getEmp }
-module.exports = { getDept }
+module.exports = { getEmp, getDept }
+
 
 
