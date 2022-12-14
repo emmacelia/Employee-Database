@@ -41,7 +41,25 @@ var getDept = function () {
     })
 
 }
-module.exports = { getEmp, getDept }
+
+var getUpdate = function () {
+    return new Promise((resolve, reject) => {
+        pool.query(`select * from employee where eid like "${eid}";`)
+            .then((data) => {
+                resolve(data)
+            })
+            .catch(error => {
+                reject(error)
+            })
+
+    })
+
+}
+
+
+
+
+module.exports = { getEmp, getDept, getUpdate }
 
 
 

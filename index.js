@@ -7,6 +7,7 @@ var x = [{ name: "Johnny", age: 31 }, { name: "Smithy", age: 41 }]
 var mySQLDAO = require("./sqlconnect");
 var pool
 var dao = require("./mongoconnect");
+const { ReturnDocument } = require('mongodb');
 
 
 app.listen(3004, () => {
@@ -22,10 +23,26 @@ app.get('/homePage', (req, res) => {
 
 
 // Server /editemployees page
-app.get('/Update', (req, res) => {
-    console.log("Get Request Recieved on /employees")
-    res.render('editemployee')
-})
+// app.get('/update/:eid', (req, res) => {
+//     console.log("Get Request Recieved on /employees")
+//      pool.query("select * from employee where eid like '{eid}';")
+//         .then((e) => {
+//             //res.send(data)
+//             res.render('editemployee', { employee: e })
+//         })
+//         .catch((error) => {
+//             if (error.errno == 1146) {
+//                 res.send("Invalid table: " + error.sqlMessage)
+//             }
+//             else (
+//                 res.send(error)
+//             )
+
+//         })
+// })
+
+
+
 
 // Server /deletedept page
 app.get('/deleteDept', (req, res) => {
@@ -62,7 +79,6 @@ app.get('/find', (req, res) => {
         })
 })
 
-
 app.get('/dept', (req, res) => {
     mySQLDAO.getDept()
         .then((de) => {
@@ -76,6 +92,22 @@ app.get('/dept', (req, res) => {
             else (
                 res.send(error)
             )
+
+        })
+})
+
+app.get('/update/:eid', (req, res) => {
+    mySQLDAO.getUpdate()
+        .then((ed) => {
+            res.render('editemployee', { editemployee: ed })
+        })
+        .catch((error) => {
+            if (error.errno == 1146) {
+                res.send("Invalid table: " + error.sqlMessage)
+            }
+            else {
+                res.send(error)
+            }
 
         })
 })

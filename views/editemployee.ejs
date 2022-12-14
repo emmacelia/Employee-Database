@@ -1,16 +1,26 @@
 <h1> edit employee</h1>
 
-<form action="/tutorial/action.html" method="post">
-    <fieldset style="background: #f6f8ff; border: 2px solid #4238ca;">
-        <legend>Customer Information</legend>
-        <input type="text" name="firstname" placeholder="EID"><br /><br />
-        <input type="text" name="lastname" placeholder="Name"><br /><br />
-        <input type="text" name="lastname" placeholder="Role"><br /><br />
-        <input type="text" name="lastname" placeholder="Salary"><br /><br />
+
+    <form method="POST">
+        <label>EID</label>
+        <input type="text" name="eid" required value="<%=editemployee.eid %>">
+        <br /><br />
+
+        <label>Name</label>
+        <input type="text" name="id" required value="<%=editemployee.ename %>">
+        <br /><br />
+
+        <label>Job</label>
+        <input type="city" name="role" required value="<%=editemployee.role %>">
+        <br /><br />
+
+        <label>Salary</label>
+        <input type="text" name="salary" required value="<%=editemployee.salary %>">
+        <br /><br />
 
         <button type="submit">Submit</button>
-    </fieldset>
+    </form>
 
-</form>
-<br /><br />
-<a href="http://localhost:3004/homePage">Home</a>
+
+    <br /><br />
+    <a href="http://localhost:3004/homePage">Home</a>
