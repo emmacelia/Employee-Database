@@ -42,7 +42,7 @@ var getDept = function () {
 
 }
 
-var getUpdate = function () {
+var getUpdate = function (eid) {
     return new Promise((resolve, reject) => {
         pool.query(`select * from employee where eid like "${eid}";`)
             .then((data) => {
@@ -51,15 +51,28 @@ var getUpdate = function () {
             .catch(error => {
                 reject(error)
             })
-
     })
+}
 
+var UpdateEmp = function (employee) {
+    return new Promise((resolve, reject) => {
+        var myQuery = {
+            sql: `Update employee set ename =?, role =?, salary = ? where eid like "${employee.eid}";`,
+            values: [employee.ename, employee.role, employee.salary]
+        }
+
+        pool.query(myQuery)
+            .then((data) => {
+                console.log(data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    })
 }
 
 
-
-
-module.exports = { getEmp, getDept, getUpdate }
+module.exports = { getEmp, getDept, getUpdate, UpdateEmp }
 
 
 

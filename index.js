@@ -8,7 +8,8 @@ var mySQLDAO = require("./sqlconnect");
 var pool
 var dao = require("./mongoconnect");
 const { ReturnDocument } = require('mongodb');
-
+var bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.listen(3004, () => {
     console.log("Server is listening on port 3004 :)");
@@ -97,17 +98,30 @@ app.get('/dept', (req, res) => {
 })
 
 app.get('/update/:eid', (req, res) => {
-    mySQLDAO.getUpdate()
+    mySQLDAO.getUpdate(req.params.eid)
         .then((ed) => {
-            res.render('editemployee', { editemployee: ed })
+            console.log(ed)
+            res.render('editemployee', { editemployee: ed[0] })
         })
         .catch((error) => {
+            console.log(error)
             if (error.errno == 1146) {
                 res.send("Invalid table: " + error.sqlMessage)
             }
             else {
                 res.send(error)
             }
+
+        })
+})
+
+app.post("/update/:eid", (req, res) => {
+
+    mySQLDAO.UpdateEmp(req.body)
+        .then((e) => {
+            console.log("Okay")
+        }).catch((error) => {
+            console.log("Not Okay")
 
         })
 })
