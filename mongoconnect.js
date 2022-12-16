@@ -1,4 +1,4 @@
-
+var mySQLDAO = require("./sqlconnect");
 const MongoClient = require('mongodb').MongoClient
 MongoClient.connect('mongodb://localhost:27017')
     .then((client) => {
@@ -10,6 +10,7 @@ MongoClient.connect('mongodb://localhost:27017')
     })
 
 var findAll = function () {
+    //.getUpdate();
     return new Promise((resolve, reject) => {
         var cursor = coll.find()
         cursor.toArray()
@@ -22,4 +23,4 @@ var findAll = function () {
     })
 }
 
-module.exports= {findAll}
+module.exports = { findAll }

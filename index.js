@@ -100,6 +100,13 @@ app.get('/dept', (req, res) => {
 app.get('/update/:eid', (req, res) => {
     mySQLDAO.getUpdate(req.params.eid)
         .then((ed) => {
+
+            //if(ed.length > 0) 
+            //check if employee exists in database
+            //res.render()
+            //else{
+            //res.redirect(/employee)
+            // }
             console.log(ed)
             res.render('editemployee', { editemployee: ed[0] })
         })
