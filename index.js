@@ -22,35 +22,6 @@ app.get('/homePage', (req, res) => {
 })
 
 
-
-// Server /editemployees page
-// app.get('/update/:eid', (req, res) => {
-//     console.log("Get Request Recieved on /employees")
-//      pool.query("select * from employee where eid like '{eid}';")
-//         .then((e) => {
-//             //res.send(data)
-//             res.render('editemployee', { employee: e })
-//         })
-//         .catch((error) => {
-//             if (error.errno == 1146) {
-//                 res.send("Invalid table: " + error.sqlMessage)
-//             }
-//             else (
-//                 res.send(error)
-//             )
-
-//         })
-// })
-
-
-
-
-// Server /deletedept page
-app.get('/deleteDept', (req, res) => {
-    console.log("Get Request Recieved to delete depts info")
-    res.render('deletedept')
-})
-
 app.get('/employees', (req, res) => {
     mySQLDAO.getEmp()
         .then((e) => {
@@ -68,11 +39,11 @@ app.get('/employees', (req, res) => {
         })
 })
 
-app.get('/find', (req, res) => {
+app.get('/employeesMongoDB', (req, res) => {
     dao.findAll()
-        .then((documents) => {
+        .then((me) => {
             // Process documents
-            res.send(documents)
+            res.render('displayMongoEmp', {displayMongoEmp: me})
         })
         .catch((error) => {
             // Handle error
@@ -132,3 +103,22 @@ app.post("/update/:eid", (req, res) => {
 
         })
 })
+
+app.get('/depts/delete/:did', (req, res) => {
+    mySQLDAO.DeleteDept(req.params.did)
+        .then((ed) => {
+            res.render('deletedept')
+        })
+        .catch((error) => {
+            // res.send("Sorry cannot delete department")
+            if (error.errno == 1146) {
+                res.send("Invalid table: " + error.sqlMessage)
+                console.log("TEST")
+            }
+            else {
+                res.send("error")
+            }
+
+        })
+})
+

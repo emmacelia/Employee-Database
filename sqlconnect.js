@@ -71,8 +71,19 @@ var UpdateEmp = function (employee) {
     })
 }
 
+var DeleteDept = function (did) {
+    return new Promise((resolve, reject) => {
+        pool.query(`delete from emp_dept where did like "${did}";`)
+            .then((data) => {
+                resolve(data)
+            })
+            .catch(error => {
+                reject(error)
+            })
+    })
 
-module.exports = { getEmp, getDept, getUpdate, UpdateEmp }
+}
+module.exports = { getEmp, getDept, getUpdate, UpdateEmp, DeleteDept }
 
 
 

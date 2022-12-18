@@ -1,0 +1,45 @@
+<h1>Display Mongo Database</h1>
+
+<h3> Employees Page </h3>
+
+
+<table border="1">
+    <tr>
+        <th>EID</th>
+        <th>Phone</th>
+        <th>Email</th>
+    </tr>
+
+
+    <tr>
+
+
+    </tr>
+    <% for(let me of displayMongoEmp){%>
+        <tl>
+
+            </tr>
+            <td>
+
+                <%=me._id %>
+            </td>
+
+            <td>
+                <%=me.phone %>
+            </td>
+            <td>
+                <%=me.email %>
+            </td>
+
+            </tr>
+
+
+            <% }%>
+
+
+
+</table>
+<br /><br />
+<a href="http://localhost:3004/editemployees">Edit</a>
+<br /><br />
+<a href="http://localhost:3004/homePage">Home</a>
