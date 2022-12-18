@@ -23,4 +23,18 @@ var findAll = function () {
     })
 }
 
-module.exports = { findAll }
+var addEmployee = function (employees) {
+    mySQLDAO.getUpdate();
+    return new Promise((resolve, reject) => {
+        coll.insertOne(employees)
+            .then((documents) => {
+                resolve(documents)
+            })
+            .catch((error) => {
+                reject(error)
+            })
+    })
+}
+
+
+module.exports = { findAll, addEmployee }

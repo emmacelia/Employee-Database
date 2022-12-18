@@ -21,7 +21,7 @@ app.get('/homePage', (req, res) => {
     res.render('home');
 })
 
-
+//SQL DATABASE
 app.get('/employees', (req, res) => {
     mySQLDAO.getEmp()
         .then((e) => {
@@ -36,18 +36,6 @@ app.get('/employees', (req, res) => {
                 res.send(error)
             )
 
-        })
-})
-
-app.get('/employeesMongoDB', (req, res) => {
-    dao.findAll()
-        .then((me) => {
-            // Process documents
-            res.render('displayMongoEmp', {displayMongoEmp: me})
-        })
-        .catch((error) => {
-            // Handle error
-            res.send(error)
         })
 })
 
@@ -71,13 +59,6 @@ app.get('/dept', (req, res) => {
 app.get('/update/:eid', (req, res) => {
     mySQLDAO.getUpdate(req.params.eid)
         .then((ed) => {
-
-            //if(ed.length > 0) 
-            //check if employee exists in database
-            //res.render()
-            //else{
-            //res.redirect(/employee)
-            // }
             console.log(ed)
             res.render('editemployee', { editemployee: ed[0] })
         })
@@ -122,3 +103,40 @@ app.get('/depts/delete/:did', (req, res) => {
         })
 })
 
+//MONGO DATABASE
+app.get('/employeesMongoDB', (req, res) => {
+    dao.findAll()
+        .then((me) => {
+            // Process documents
+            res.render('displayMongoEmp', { displayMongoEmp: me })
+        })
+        .catch((error) => {
+            // Handle error
+            res.send(error)
+        })
+})
+app.get('/employeesMongoDB/add', (req, res) => {
+    res.render('AddEmp', { AddEmp: e })
+
+    console.log(error)
+    if (error.errno == 1146) {
+        res.send("Invalid table: " + error.sqlMessage)
+    }
+    else {
+        res.send(error)
+    }
+
+})
+
+app.post('/employeesMongoDB/add', (req, res) => {
+
+    dao.addEmployee(req.body)
+        .then((e) => {
+            console.log("Okay")
+            res.render('home')
+        }).catch((error) => {
+            console.log("Not Okay")
+            // res.send("Could not add as it is already there")
+            res.render('error')
+        })
+})
