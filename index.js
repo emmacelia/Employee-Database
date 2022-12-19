@@ -91,6 +91,7 @@ app.get('/update/:eid', (req, res) => {
             }
 
         })
+
 })
 
 app.post("/update/:eid", (req, res) => {
@@ -99,16 +100,19 @@ app.post("/update/:eid", (req, res) => {
         .then((e) => {
             console.log("Okay")
 
+
         }).catch((error) => {
             console.log("Not Okay")
 
         })
+    res.redirect('/employees')
+
 })
 
 app.get('/depts/delete/:did', (req, res) => {
     mySQLDAO.DeleteDept(req.params.did)
         .then((ed) => {
-            res.redirect("/dept")
+            // res.redirect("/dept")
         })
         .catch((error) => {
             // res.send("Sorry cannot delete department")
@@ -117,8 +121,7 @@ app.get('/depts/delete/:did', (req, res) => {
                 console.log("TEST")
             }
             else {
-                res.send("error")
-                res.render('deletedept')
+                res.render('error')
             }
 
         })
