@@ -11,6 +11,9 @@ const { ReturnDocument } = require('mongodb');
 var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false }))
 
+//stores sql ids to be checked
+const SqlId = []
+
 app.listen(3004, () => {
     console.log("Server is listening on port 3004 :)");
 });
@@ -19,6 +22,20 @@ app.listen(3004, () => {
 app.get('/homePage', (req, res) => {
     console.log("Get Request Recieved on /")
     res.render('home');
+
+    mySQLDAO.getEmp()
+        .then((data) => {
+            for (let i = 0; i < data.length; i++) {
+                SqlId[i] = data[i].eid
+
+            }
+
+        })
+        .catch((error) => {
+
+
+        })
+
 })
 
 //SQL DATABASE
@@ -38,6 +55,8 @@ app.get('/employees', (req, res) => {
 
         })
 })
+
+
 
 app.get('/dept', (req, res) => {
     mySQLDAO.getDept()
@@ -79,6 +98,7 @@ app.post("/update/:eid", (req, res) => {
     mySQLDAO.UpdateEmp(req.body)
         .then((e) => {
             console.log("Okay")
+
         }).catch((error) => {
             console.log("Not Okay")
 
@@ -88,7 +108,7 @@ app.post("/update/:eid", (req, res) => {
 app.get('/depts/delete/:did', (req, res) => {
     mySQLDAO.DeleteDept(req.params.did)
         .then((ed) => {
-            res.render('deletedept')
+            res.redirect("/dept")
         })
         .catch((error) => {
             // res.send("Sorry cannot delete department")
@@ -98,6 +118,7 @@ app.get('/depts/delete/:did', (req, res) => {
             }
             else {
                 res.send("error")
+                res.render('deletedept')
             }
 
         })
@@ -118,25 +139,35 @@ app.get('/employeesMongoDB', (req, res) => {
 app.get('/employeesMongoDB/add', (req, res) => {
     res.render('AddEmp', { AddEmp: e })
 
-    console.log(error)
-    if (error.errno == 1146) {
-        res.send("Invalid table: " + error.sqlMessage)
-    }
-    else {
-        res.send(error)
-    }
-
 })
 
 app.post('/employeesMongoDB/add', (req, res) => {
-
-    dao.addEmployee(req.body)
+    // console.log(req.body.eid)
+    mySQLDAO.getUpdate(req.body._id)
         .then((e) => {
-            console.log("Okay")
-            res.render('home')
+            //console.log(e.length)
+            if (e.length == 0) {
+                res.send("Cannot add");
+            }
+            else {
+                console.log(req.body)
+
+                dao.addEmployee(req.body)
+                    .then((d) => {
+                        console.log("Okay")
+                        res.redirect('/homePage')
+                    }).catch((error) => {
+                        console.log(error)
+                        console.log("Not Okay")
+                        // res.send("Could not add as it is already there")
+                        res.render('error')
+                    })
+
+
+            }
+
+
         }).catch((error) => {
-            console.log("Not Okay")
-            // res.send("Could not add as it is already there")
-            res.render('error')
+            console.log(error)
         })
 })

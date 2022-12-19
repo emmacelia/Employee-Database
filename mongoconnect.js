@@ -1,4 +1,5 @@
 var mySQLDAO = require("./sqlconnect");
+var coll
 const MongoClient = require('mongodb').MongoClient
 MongoClient.connect('mongodb://localhost:27017')
     .then((client) => {
@@ -24,7 +25,6 @@ var findAll = function () {
 }
 
 var addEmployee = function (employees) {
-    mySQLDAO.getUpdate();
     return new Promise((resolve, reject) => {
         coll.insertOne(employees)
             .then((documents) => {

@@ -73,7 +73,7 @@ var UpdateEmp = function (employee) {
 
 var DeleteDept = function (did) {
     return new Promise((resolve, reject) => {
-        pool.query(`delete from emp_dept where did like "${did}";`)
+        pool.query(`delete from dept where did like "${did}";`)
             .then((data) => {
                 resolve(data)
             })
